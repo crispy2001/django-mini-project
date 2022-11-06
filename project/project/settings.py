@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -139,7 +141,11 @@ AUTHENTICATION_BACKENDS = (
 
 SITED_ID = 1
 LOGIN_REDIRECT_URL = 'allauth'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
 LOGOUT_REDIRECT_URL = 'home'
+
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "set_emails")

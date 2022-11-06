@@ -18,7 +18,7 @@ from . import views
 
 urlpatterns=[
         path('signup/', views.SignUp.as_view(), name='signup'),
-        re_path(r'^(?P<pk>\w+)/profile/create/', views.ProfileCreateView.as_view(), name = 'create-profile'),
+        re_path(r'^(?P<pk>\w+)/profile/update', views.ProfileUpdateView.as_view(), name = 'update-profile'),
         re_path(r'^(?P<pk>\w+)/profile', views.ProfileDetailView.as_view(), name = 'profile'),
         # # path('profile/edit', views.EditProfile.as_view(), name = 'edit-profile'),
 ]

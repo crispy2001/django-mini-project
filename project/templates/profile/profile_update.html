@@ -1,0 +1,15 @@
+{% extends 'home.html'%}
+
+{% block title %} My Login {% endblock %}
+
+{% block content %}
+update
+LOGIN
+<form method = "post">
+  {% csrf_token %}
+  <label> {{user}}</label>
+  <textarea name = "introduction">{{profile.introduction}}</textarea>
+  <button type = "submit" value = "update">subnut</button>
+</form>
+{{form.errors}}
+{%endblock%}

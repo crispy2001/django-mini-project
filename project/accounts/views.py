@@ -5,55 +5,60 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
-from django.http import Http404
+from django.http import Http404, request, response
 from .models import Profile, User
-from django.shortcuts import redirect
-# from .forms import ProfileForm
+from django.shortcuts import redirect, reverse
+
+from .forms import ProfileForm
 
 # Create your views here.
 
 class SignUp(generic.CreateView):
     form_class = UserCreationForm
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('allauth')
     template_name = 'signup.html'
 
-    
-
-# class CreateProfile(TemplateView):
-#     template_name = 'test.html'
-
 class ProfileDetailView(DetailView):
-    # toast = "variable toast"
     model = Profile
     template_name = 'profile/profile_info.html'
     
-    def get_conetxt_data(self, request, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
-        # person = get_object_or_404(Profile, pk = self.kwargs['pk'])
-        try:
-            person = Profile.objects.get(id = self.kwargs['pk'])
-            context['person'] = person
-            return context
-        except Http404:
-            response = redirect('home')
-            return response
+        person = Profile.objects.get(id = self.kwargs['pk'])
+        context['person'] = person
+        return context
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(ProfileDetailView, self).get_context_data(**kwargs)
-    #     # person = get_object_or_404(Profile, pk = self.kwargs['pk'])
-    #     person = Profile.objects.get(id = self.kwargs['pk'])
-    #     context['person'] = person
-    #     return context
 
-class EditProfile(UpdateView):
-    model = Profile
-    template_name = 'profile/profile_edit.html'
+class ProfileUpdateView(UpdateView):
+    form_class = ProfileForm
+    template_name = 'profile/profile_update.html'
 
-class ProfileCreateView(CreateView):
-    model = Profile
-    fields = ['introduction']
-    template_name = 'profile.html'
-    success_url = reverse_lazy('profile', kwargs = {'username': "toast"})
+    def get_queryset(self, **kwargs):
+        return Profile.objects.filter(user = self.request.user.id)
+        # # if self.request.user.is_authenticated():
+        # #     return Profile.objects.filter(user = self.kwargs['pk'])
+        
+        # # else:
+        # #     return queryset.filter(pk = self.request.user.pk)
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileUpdateView, self).get_context_data(**kwargs)
+        profile = Profile.objects.get(id = self.kwargs['pk'])
+        context['profile'] = profile
+        return context
+        
+    def get_success_url(self):
+        return reverse('profile', kwargs = {'pk': self.kwargs['pk']})
+
+
+
+
+# class ProfileCreateView(CreateView):
+#     model = Profile
+#     fields = '__all__'
+#     # form_class = ProfileForm
+#     template_name = 'profile_create.html'
+#     # success_url = reverse_lazy('profile', kwargs = {'p': "toast"})
 
 
 
