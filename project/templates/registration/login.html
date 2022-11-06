@@ -1,0 +1,22 @@
+{% extends 'home.html'%}
+
+{% block title %} My Login {% endblock %}
+
+{% block content %}
+LOGIN
+<form method = "post">
+  {% csrf_token %}
+  <label> username</label>
+  <input name = "username">
+  <label>password</label>
+  <input name = "password">
+  <button type = "submit">subnut</button>
+</form>
+
+<!-- <h2> Login </h2>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p}}
+  <button type="submit" name="button">Login</button>
+</form> -->
+{%endblock%}
