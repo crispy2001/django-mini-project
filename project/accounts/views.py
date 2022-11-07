@@ -32,14 +32,16 @@ class ProfileDetailView(DetailView):
 class ProfileUpdateView(UpdateView):
     form_class = ProfileForm
     template_name = 'profile/profile_update.html'
-
+    
     def get_queryset(self, **kwargs):
         return Profile.objects.filter(user = self.request.user.id)
-        # # if self.request.user.is_authenticated():
-        # #     return Profile.objects.filter(user = self.kwargs['pk'])
+        #我先處理好別的問題，可不可以修改他人權限的東西先放著，目前的狀態是只能修改自己的profile，如果url輸入別人的update profile會直接噴錯
         
-        # # else:
-        # #     return queryset.filter(pk = self.request.user.pk)
+        # if self.request.user.is_authenticated():
+        #     return Profile.objects.filter(user = self.kwargs['pk'])
+        
+        # else:
+        #     return queryset.filter(pk = self.request.user.pk)
 
     def get_context_data(self, **kwargs):
         context = super(ProfileUpdateView, self).get_context_data(**kwargs)
@@ -51,14 +53,6 @@ class ProfileUpdateView(UpdateView):
         return reverse('profile', kwargs = {'pk': self.kwargs['pk']})
 
 
-
-
-# class ProfileCreateView(CreateView):
-#     model = Profile
-#     fields = '__all__'
-#     # form_class = ProfileForm
-#     template_name = 'profile_create.html'
-#     # success_url = reverse_lazy('profile', kwargs = {'p': "toast"})
 
 
 

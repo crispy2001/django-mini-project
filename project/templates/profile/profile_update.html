@@ -4,12 +4,17 @@
 
 {% block content %}
 update
-LOGIN
-<form method = "post">
+<form enctype = "multipart/form-data" method="POST">
+  {% csrf_token %}
+  {{ form.as_p}}
+  <button type="submit" name="button" value = "Upload">update</button>
+</form>
+<!-- <form method = "post">
   {% csrf_token %}
   <label> {{user}}</label>
   <textarea name = "introduction">{{profile.introduction}}</textarea>
   <button type = "submit" value = "update">subnut</button>
 </form>
-{{form.errors}}
+{{form.errors}} -->
 {%endblock%}
+
