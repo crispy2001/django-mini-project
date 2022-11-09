@@ -33,7 +33,8 @@ urlpatterns = [
 
     path('allauth', views.Home.as_view(), name = 'allauth'),
 
-    path('articles/', include('articles.urls'))
+    path('articles/', include('articles.urls')),
+    path('test/', views.Test.as_view(), name = 'test'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

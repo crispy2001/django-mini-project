@@ -1,0 +1,26 @@
+.svg-smile{
+    filter: invert(90%) sepia(100%) saturate(3%) hue-rotate(4deg) brightness(107%) contrast(100%);
+}
+.my-form{
+    background-color: #D2E9FF;
+    min-height: 250px;
+}
+
+  
+.my-nav:hover{
+    font-weight:bold !important;
+}
+
+
+
+.my-btn{
+    background-color: black;
+    color: white;
+    z-index: 0 !important;
+}
+
+.my-btn:hover{
+    background-color: #4f4f4f;
+    color: white;
+}
+  

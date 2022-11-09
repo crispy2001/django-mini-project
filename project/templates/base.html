@@ -1,14 +1,88 @@
-<!-- templates/base.html -->
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en" class = "h-100">
 <head>
-  <meta charset="utf-8">
-  <title>{% block title %}Django Auth Tutorial{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    {% load static %}
+    <link href="{% static 'bootstrap-5.0.2-dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'mystyle/my.css' %}" rel="stylesheet">
+    <script src="{% static 'mystyle/jquery-3.6.1.js' %}"></script>
+
 </head>
-<body>
-  <main>
-    {% block content %}
-    {% endblock %}
-  </main>
-</body>
+<body class = "d-flex flex-column h-100">
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class = "container ">
+            <div class="container-fluid">
+                <!-- <img class = "svg-smile" src="{% static 'imgs/face-smile-regular.svg' %}" alt=""  height="30" /> -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link my-nav " aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link my-nav" href="#">write something!</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link my-nav disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        </li>
+                    </ul>
+                    <ul class = "navbar-nav mb-2 mb-md-0 d-flex">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link my-nav" href="{% url 'create-article' %}">write something</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link my-nav my-nav dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{user.username}}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="logout">Log out</a></li>
+                            </ul>
+                        </li>
+                        {% else %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link my-nav my-nav dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Visitor
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="login">Log in</a></li>
+                            </ul>
+                        </li>
+                        {% endif %}	
+                    </ul>
+                </div>
+            </div>
+        </div>
+	</nav>
+	
+	<!-- nav bar space -->
+	<div style = "min-height: 56px " ></div> 
+
+	<main class="bg-body container ">
+		{% block content %}
+		{% endblock %}
+	</main>
+
+	<footer class="footer mt-auto py-4 bg-light">
+		<div class="p-4 text-center">
+			Copyright © :D
+		</div>
+	</footer>
+
+
+
+	<script src="{% static 'bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js' %}"></script>
+	<script src="{% static 'mystyle/my.js' %}"></script>
+	
+  </body>
 </html>
