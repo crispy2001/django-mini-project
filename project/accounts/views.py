@@ -8,7 +8,7 @@ from django.views.generic.detail import DetailView
 from django.http import Http404, request, response
 from .models import Profile, User
 from django.shortcuts import redirect, reverse
-
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin, UserPassesTestMixin
 from .forms import ProfileForm
 
 # Create your views here.
@@ -29,19 +29,17 @@ class ProfileDetailView(DetailView):
         return context
 
 
-class ProfileUpdateView(UpdateView):
+class ProfileUpdateView(UserPassesTestMixin, UpdateView):
+    def test_func(self):
+        profile = Profile.objects.get( id = self.kwargs['pk'])
+        if profile.id == self.request.user.id:
+            return self.request.user
+
     form_class = ProfileForm
     template_name = 'profile/profile_update.html'
     
     def get_queryset(self, **kwargs):
         return Profile.objects.filter(user = self.request.user.id)
-        #我先處理好別的問題，可不可以修改他人權限的東西先放著，目前的狀態是只能修改自己的profile，如果url輸入別人的update profile會直接噴錯
-        
-        # if self.request.user.is_authenticated():
-        #     return Profile.objects.filter(user = self.kwargs['pk'])
-        
-        # else:
-        #     return queryset.filter(pk = self.request.user.pk)
 
     def get_context_data(self, **kwargs):
         context = super(ProfileUpdateView, self).get_context_data(**kwargs)
