@@ -1,6 +1,30 @@
-.svg-smile{
-    filter: invert(90%) sepia(100%) saturate(3%) hue-rotate(4deg) brightness(107%) contrast(100%);
+.svg-avatar{
+    /* filter: invert(90%) sepia(100%) saturate(3%) hue-rotate(4deg) brightness(107%) contrast(100%); */
+    /* font-size: 50px; */
+    width: 20vw;
+    height: 20vw;
+    border-radius: 50%;
+    /* bg-light color */
+    /* background-color: #f8f9fa;       */
+    background-color: white;
 }
+.img-avatar{
+    overflow: hidden;
+    width: 20vw;
+    height: 20vw;
+    border-radius: 50%;
+    position: relative;
+}
+
+
+.test-row{
+    background-color: red;
+}
+.test-col{
+    background-color: green;
+
+}
+
 .my-form{
     background-color: #D2E9FF;
     min-height: 250px;
@@ -11,6 +35,11 @@
     font-weight:bold !important;
 }
 
+.my-form-error-msg{
+    margin-top: 0.25rem;
+    font-size: .875em;
+    color: #dc3545;
+}
 
 
 .my-btn{

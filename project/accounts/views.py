@@ -24,7 +24,9 @@ class ProfileDetailView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super(ProfileDetailView, self).get_context_data(**kwargs)
-        person = Profile.objects.get(id = self.kwargs['pk'])
+        profile = Profile.objects.get(id = self.kwargs['pk'])
+        person = User.objects.get(id = self.kwargs['pk'])
+        context['profile'] = profile
         context['person'] = person
         return context
 

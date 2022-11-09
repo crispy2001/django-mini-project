@@ -19,7 +19,7 @@ from . import views
 
 urlpatterns=[
         path('signup/', views.SignUp.as_view(), name='signup'),
-        re_path(r'^(?P<pk>\w+)/profile/update', views.ProfileUpdateView.as_view(), name = 'update-profile'),
+        re_path(r'^(?P<pk>\w+)/profile/update', views.ProfileUpdateView.as_view(), name = 'profile-update'),
         re_path(r'^(?P<pk>\w+)/profile', views.ProfileDetailView.as_view(), name = 'profile'),
 ]
 

@@ -44,9 +44,9 @@
                                 {{user.username}}
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="{% url 'profile' pk=user.id %}">Profile</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="logout">Log out</a></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></li>
                             </ul>
                         </li>
                         {% else %}
@@ -55,7 +55,8 @@
                             Visitor
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="login">Log in</a></li>
+                                <li><a class="dropdown-item" href="{% url 'login' %}">Log in</a></li>
+                                <li><a class="dropdown-item" href="{% url 'signup' %}">Register</a></li>
                             </ul>
                         </li>
                         {% endif %}	
@@ -68,10 +69,10 @@
 	<!-- nav bar space -->
 	<div style = "min-height: 56px " ></div> 
 
-	<main class="bg-body container ">
-		{% block content %}
-		{% endblock %}
-	</main>
+    {% block content %}
+    {% endblock %}
+	<!-- <main class="bg-body container ">
+	</main> -->
 
 	<footer class="footer mt-auto py-4 bg-light">
 		<div class="p-4 text-center">

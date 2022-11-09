@@ -1,7 +1,37 @@
-profile info
+{% extends 'base.html' %}
 
-<h1>{{user}}</h1>
+{% block title%} Profile {% endblock %}
 
-<h1>{{person.introduction}}</h1>
+{% block content %}
 
-<img src = "{{ MEDIA_URL}}{{person.avatar}}" alt = "bad">
+<div class="album bg-light">
+    <section class="py-5 text-center container">
+        <div class="row ">
+          <div class="col-lg-6 col-md-8 mx-auto">
+            {%if profile.avatar%}
+            <div class = "d-flex justify-content-center">
+                <div class = " img-avatar d-flex justify-content-center">
+                    <img class = "" src = "{{ MEDIA_URL}}{{profile.avatar}}">
+                </div>
+            </div>
+            {%else%}
+            {% load static %}
+            <img class = "svg-avatar" src="{% static 'imgs/user.svg' %}" height = "20">
+            {%endif%}
+            <h1 class="fw-light">{{person.username}}</h1>
+            {%if user.id == profile.user_id or profile.is_visable == 1 %}
+                <p class="lead text-muted">{{profile.introduction}}</p>
+            {%else%}
+                <p class="lead text-muted">user hide his/her information</p>
+            {%endif%}
+            <p>
+                {%if user.id == profile.user_id%}
+                <a href="{% url 'profile-update' pk=user.id%}" class="btn btn-dark my-2">Edit Profile</a>
+                {%endif%}
+              <!-- <a href="#" class="btn btn-secondary my-2">Secondary action</a> -->
+            </p>
+          </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
