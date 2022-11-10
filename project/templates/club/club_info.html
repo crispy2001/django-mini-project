@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title%} Club {% endblock %}
+
+{% block content %}
+<div class="album bg-light">
+    <section class="py-5 text-center container">
+        <div class="row ">
+          <div class="col-lg-6 col-md-8 mx-auto">
+            {%if club.cover%}
+            <div class = "d-flex justify-content-center">
+                <div class = " img-avatar d-flex justify-content-center">
+                    <img class = "" src = "{{ MEDIA_URL}}{{club.cover}}">
+                </div>
+            </div>
+            {%else%}
+            {% load static %}
+            <img class = "svg-avatar" src="{% static 'imgs/building-columns.svg' %}" height = "20">
+            {%endif%} 
+            <h1 class="fw-light">{{club.name}}</h1>
+                <p class="lead text-muted">{{club.introduction}}</p>
+            <p>
+                {%if user == club.admin%}
+                <a href="{% url 'profile-update' pk=user.id%}" class="btn btn-dark my-2">Edit Club Introduction</a>
+                {%endif%}
+                <a href="{% url 'article-create' %}" class="btn btn-secondary my-2">Write Article</a>
+            </p>
+          </div>
+        </div>
+    </section>
+</div>
+
+<div class = "container bg-body py-5">
+    
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="index-tab" data-bs-toggle="tab" data-bs-target="#index" type="button" role="tab" aria-controls="index" aria-selected="true">Index</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="member-tab" data-bs-toggle="tab" data-bs-target="#member" type="button" role="tab" aria-controls="member" aria-selected="false">Member</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="index" role="tabpanel" aria-labelledby="index-tab">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <!-- <th scope="col">#</th> -->
+                    <th class="col-3">Title</th>
+                    <th class="col-8">Article</th>
+                    <th class="col">more</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {%for article in articles%}
+                    <tr>
+                        <!-- <th scope="row">1</th> -->
+                        <td>{{article.title}}</td>
+                        <td>{{article.article}}</td>
+                        <td>
+                            <a href="" class = "text-center">more</a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="member" role="tabpanel" aria-labelledby="member-tab">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <!-- <th scope="col">#</th> -->
+                    <th class="col-3">Name</th>
+                    <th class="col-8"></th>
+                    <th class="col">more</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {%for member in members%}
+                    <tr>
+                        <!-- <th scope="row">1</th> -->
+                        <td>{{member}}</td>
+                        <td></td>
+                        <td>
+                            <a href="{% url 'profile' pk=member.id %}" class = "text-center">more</a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    
+</div>
+
+
+{% endblock %}

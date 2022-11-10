@@ -34,6 +34,8 @@ urlpatterns = [
     path('allauth', views.Home.as_view(), name = 'allauth'),
 
     path('articles/', include('articles.urls')),
+    path('clubs/', include('clubs.urls')),
+
     path('test/', views.Test.as_view(), name = 'test'),
 ]
 
