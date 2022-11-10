@@ -12,7 +12,11 @@ from django.shortcuts import redirect, reverse
 import datetime
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin, UserPassesTestMixin
 
-class ArticleDetailView(DetailView):
+class ArticleDetailView(UserPassesTestMixin, DetailView):
+    def test_func(self):
+        article = Article.objects.get( id = self.kwargs['pk'])
+        if article.user_id == self.request.user.id or article.is_visable == 1:
+            return self.request.user
     model = Article
     template_name = 'article/article.html'
     
@@ -33,7 +37,7 @@ class ArticleCreateView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('article', kwargs = {'pk': self.kwargs['pk']})
+        return reverse('article', kwargs = {'pk': self.request.user.id})
 
 
 class ArticleUpdateView(UserPassesTestMixin, UpdateView):
@@ -58,6 +62,13 @@ class ArticleUpdateView(UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         form.instance.update_time = datetime.datetime.now()
         print(datetime.datetime.now())
+
+        # check the view permission
+        x= self.request.POST.get('is_visable')
+        if x == "on":
+            form.instance.is_visable = 1
+        else:
+            form.instance.is_visable = 0
         return super().form_valid(form)
 
     def get_success_url(self):

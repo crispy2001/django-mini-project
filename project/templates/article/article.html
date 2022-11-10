@@ -1,3 +1,39 @@
+{% extends 'home.html'%}
+
+{% block title %} View Article {% endblock %}
+
+{% block content %}
+<div class = "h1 m-4 text-center">{{article.title}}</div>
+<div class = "container">
+	<div class = "row justify-content-center">
+		<form class="g-3 needs-validation my-form px-5 py-3 m-2 mb-5 col-10 align-self-center bg-light" novalidate >
+			<div class="mb-2">
+				<div>
+					<div class = "col">
+						{{article.article}}
+                    </div>
+				</div>
+			</div>
+		</form>
+        <section class="text-center container">
+            <div class="row ">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <p>
+                        {%if user.id == article.user_id%}
+                        <a href="{% url 'article-update' pk=article.id%}" class="btn btn-dark my-2">Edit Article</a>
+                        <a href="" class="btn btn-secondary my-2">Delete</a>
+                        {%endif%}
+                    </p>
+              </div>
+            </div>
+        </section>
+	</div>
+</div>
+
+
+
+{%endblock%}
+
 detail article
 {{article}}
 {{article.article}}

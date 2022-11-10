@@ -1,3 +1,55 @@
+{% extends 'home.html'%}
+
+{% block title %} Write Article {% endblock %}
+
+{% block content %}
+<div class = "h1 m-4 text-center">Write Something!</div>
+<div class = "container">
+	<div class = "row justify-content-center">
+		<form enctype = "multipart/form-data" class="g-3 needs-validation my-form px-5 py-3 m-2 mb-5 col-10 align-self-center bg-light" novalidate method = "post">
+			{% csrf_token %}
+			<div class="mb-2">
+				<div>
+					<label >Title</label>
+					<div class = "col">
+						<input type="text" class="form-control" id="title" name = "title" placeholder="" required>
+						<div class="invalid-feedback">
+							Title cannot be null
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mb-2">
+				<div>
+					<label >Article</label>
+					<div class = "col">
+						<textarea type="text" class="form-control" id="article" name = "article" placeholder="write something..." required ></textarea>
+                        <div class="invalid-feedback">
+							Title cannot be null
+						</div>
+                    </div>
+				</div>
+			</div>
+			<div class="mb-2">
+				<div>
+					<div class = "col">
+                        <input class = "form-check-input" type = "checkbox" name = "is_visable">
+						<label >visable or not</label>
+					</div>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<button class="col-6 btn my-btn" type="submit" value = "submit">Submit</button>
+			</div>
+		</form>      
+	</div>
+</div>
+
+{{form.errors}}
+
+{%endblock%}
+
+
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p}}

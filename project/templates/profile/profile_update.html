@@ -6,7 +6,7 @@
 <div class = "h1 m-4 text-center">{{user.username}}</div>
 <div class = "container">
 	<div class = "row justify-content-center">
-		<form enctype = "multipart/form-data" class="g-3 needs-validation login-form px-5 py-3 m-2 mb-5 col-6 align-self-center bg-light" novalidate method = "post">
+		<form enctype = "multipart/form-data" class="g-3 needs-validation my-form px-5 py-3 m-2 mb-5 col-6 align-self-center bg-light" novalidate method = "post">
 			{% csrf_token %}
 			<div class="mb-2">
 				<div>
@@ -27,8 +27,8 @@
 			<div class="mb-2">
 				<div>
 					<div class = "col">
-						<label >visable or not</label>
 						<input class = "form-check-input" type = "checkbox" name = "is_visable">
+						<label >visable or not</label>
 					</div>
 				</div>
 			</div>
@@ -39,7 +39,6 @@
 	</div>
 </div>
 
-{{form.errors}}
 
 {%endblock%}
 
