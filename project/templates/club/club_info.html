@@ -21,9 +21,9 @@
                 <p class="lead text-muted">{{club.introduction}}</p>
             <p>
                 {%if user == club.admin%}
-                <a href="{% url 'profile-update' pk=user.id%}" class="btn btn-dark my-2">Edit Club Introduction</a>
+                <a href="{% url 'club-update' pk=club.id%}" class="btn btn-dark my-2">Edit Club Introduction</a>
                 {%endif%}
-                <a href="{% url 'article-create' %}" class="btn btn-secondary my-2">Write Article</a>
+                <a href="{% url 'club-article-create' club_pk=club.id%}" class="btn btn-secondary my-2">Write Article</a>
             </p>
           </div>
         </div>
@@ -58,7 +58,7 @@
                         <td>{{article.title}}</td>
                         <td>{{article.article}}</td>
                         <td>
-                            <a href="" class = "text-center">more</a>
+                            <a href="{% url 'club-article' club_pk=club.id pk=article.id %}" class = "text-center">more</a>
                         </td>
                     </tr>
                     {%endfor%}

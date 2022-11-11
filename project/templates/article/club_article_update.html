@@ -1,0 +1,42 @@
+{% extends 'home.html'%}
+
+{% block title %} Update Article {% endblock %}
+
+{% block content %}
+<div class = "h1 m-4 text-center">Update Club Article</div>
+<div class = "container">
+	<div class = "row justify-content-center">
+		<form enctype = "multipart/form-data" class="g-3 needs-validation my-form px-5 py-3 m-2 mb-5 col-10 align-self-center bg-light" novalidate method = "post">
+			{% csrf_token %}
+			<div class="mb-2">
+				<div>
+					<label >Title</label>
+					<div class = "col">
+						<input type="text" class="form-control" id="title" name = "title" placeholder="" required value = "{{article.title}}">
+						<div class="invalid-feedback">
+							Title cannot be null
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mb-2">
+				<div>
+					<label >Article</label>
+					<div class = "col">
+						<textarea type="text" class="form-control" id="article" name = "article" placeholder="write something..." required >{{article.article}}</textarea>
+                        <div class="invalid-feedback">
+							Title cannot be null
+						</div>
+                    </div>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<button class="col-6 btn my-btn" type="submit" value = "submit">update</button>
+			</div>
+		</form>      
+	</div>
+</div>
+
+{{form.errors}}
+
+{%endblock%}

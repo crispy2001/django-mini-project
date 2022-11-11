@@ -19,9 +19,9 @@
             <div class="row ">
                 <div class="col-lg-6 col-md-8 mx-auto">
                     <p>
-                        <a href="{% url 'profile' pk=article.user_id%}" class="btn btn-dark my-2">Back</a>
+                        <a href="{% url 'club' pk=article.club_id%}" class="btn btn-dark my-2">Back</a>
                         {%if user.id == article.user_id%}
-                        <a href="{% url 'article-update' pk=article.id%}" class="btn btn-secondary my-2">Edit</a>
+                        <a href="{% url 'club-article-update' club_pk=article.club_id pk=article.id%}" class="btn btn-secondary my-2">Edit</a>
                         <a href="" class="btn btn-secondary my-2">Delete</a>
                         {%endif%}
                     </p>

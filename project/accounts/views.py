@@ -31,9 +31,9 @@ class ProfileIndexView(TemplateView):
         if profile.id == self.request.user.id:
             articles = Article.objects.filter(user_id = self.request.user.id)
             context['articles'] = articles
-        # else:
-        #     articles = Article.objects.get(user_id = profile.id, is_visable = 1)
-        #     context['articles'] = articles
+        else:
+            articles = Article.objects.get(user_id = profile.id, is_visable = 1)
+            context['articles'] = articles
         context['profile'] = profile
         context['person'] = person
         return context

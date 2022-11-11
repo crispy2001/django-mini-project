@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from clubs.models import Club
 # Create your models here.
 
 class Article(models.Model):
@@ -11,4 +12,5 @@ class Article(models.Model):
     create_time = models.TimeField(blank = True, null = True)
     update_time = models.TimeField(blank = True, null = True)
     user = models.ForeignKey(User, on_delete = models.CASCADE)
+    club = models.ForeignKey(Club, on_delete = models.CASCADE, blank = True, null = True)
 

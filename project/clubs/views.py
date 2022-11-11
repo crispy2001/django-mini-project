@@ -7,6 +7,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
 from django.http import Http404, request, response
 from .models import Club, User
+from articles.models import Article
 from .forms import ClubForm
 from django.shortcuts import redirect, reverse
 import datetime
@@ -37,9 +38,10 @@ class ClubDetailView(UserPassesTestMixin, TemplateView):
         context = super(ClubDetailView, self).get_context_data(**kwargs)
         club = Club.objects.filter(id = self.kwargs['pk'])[0]
         members = Club.objects.get( id = self.kwargs['pk']).user.all().filter()
-
+        articles = Article.objects.filter(club_id = self.kwargs['pk'])
         context['club'] = club
         context['members'] = members
+        context['articles'] = articles
         return context
 
 class ClubCreateView(CreateView):
@@ -54,7 +56,7 @@ class ClubCreateView(CreateView):
         instance.user.add(self.request.user)
         return super().form_valid(form)
 
-    def get_success_url(self, form):
+    def get_success_url(self):
         return reverse('club', kwargs = {'pk': self.object.pk})
 
 
@@ -62,7 +64,7 @@ class ClubUpdateView(UserPassesTestMixin, UpdateView):
     
     def test_func(self):
         club = Club.objects.get( id = self.kwargs['pk'])
-        if club.user_id == self.request.user.id:
+        if club.admin_id == self.request.user.id:
             return self.request.user
 
     form_class = ClubForm
@@ -81,12 +83,6 @@ class ClubUpdateView(UserPassesTestMixin, UpdateView):
         form.instance.update_time = datetime.datetime.now()
         print(datetime.datetime.now())
 
-        # check the view permission
-        x= self.request.POST.get('is_visable')
-        if x == "on":
-            form.instance.is_visable = 1
-        else:
-            form.instance.is_visable = 0
         return super().form_valid(form)
 
     def get_success_url(self):

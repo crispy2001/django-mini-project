@@ -3,12 +3,17 @@
 {% block title %}{% endblock %}
 
 {% block content %}
+<body class = "container ">
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  {{user.id}}
-  <p><a href="{% url 'logout' %}">logout</a></p>
+
+  <h1 class = "text-center p-5">wlecome {{user}}</h1>
+
+  <!-- Hi {{ user.username }}! -->
+  <!-- {{user.id}}
+  <p><a href="{% url 'logout' %}">logout</a></p> -->
 {% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">login</a>
+  <h1 class = "text-center p-5">You are not logged in</h1>
+  <!-- <a href="{% url 'login' %}">login</a> -->
 {% endif %}
+</body>
 {% endblock %}
