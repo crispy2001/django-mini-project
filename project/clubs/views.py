@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
+from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -8,7 +9,7 @@ from django.views.generic.detail import DetailView
 from django.http import Http404, request, response
 from .models import Club, User
 from articles.models import Article
-from .forms import ClubForm
+from .forms import ClubForm, JoinClubForm
 from django.shortcuts import redirect, reverse
 import datetime
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin, UserPassesTestMixin
@@ -17,9 +18,15 @@ class ClubIndexView(TemplateView):
     template_name = 'club/club_index.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ClubDetailView, self).get_context_data(**kwargs)
-        club = Club.objects.get(id = self.kwargs['pk'])
-        context['club'] = club
+        context = super(ClubIndexView, self).get_context_data(**kwargs)
+        clubs = Club.objects.filter()
+        u = User.objects.get( id = self.request.user.id)
+        clubs_joined = u.club_set.all()
+        clubs_not_joined = Club.objects.exclude(id__in = clubs_joined)
+        # print(club_joined)
+        # print(club_not_joined)
+        context['clubs_joined'] = clubs_joined
+        context['clubs_not_joined'] = clubs_not_joined
         return context
 
 
@@ -50,6 +57,7 @@ class ClubCreateView(CreateView):
 
     def form_valid(self, form):
         instance = form.save(commit=False)
+        instance.name = self.request.POST.get('name')
         instance.admin_id = self.request.user.id
         instance.save()
         form.save_m2m()
@@ -88,5 +96,26 @@ class ClubUpdateView(UserPassesTestMixin, UpdateView):
     def get_success_url(self):
         return reverse('club', kwargs = {'pk': self.kwargs['pk']})
 
-    
+class ClubJoinView(FormView):
+    template_name = 'club/club_join.html'
+    form_class = JoinClubForm
 
+    def get_context_data(self, **kwargs):
+        context = super(ClubJoinView, self).get_context_data(**kwargs)
+        club = Club.objects.get(id = self.kwargs['pk'])
+        context['club'] = club
+        return context
+
+    def form_valid(self, form):
+        club = Club.objects.filter(id = self.kwargs['pk']).get()
+        u = User.objects.get( id = self.request.user.id)
+        # clubs_joined = u.club_set.all()
+        # clubs_not_joined = Club.objects.exclude(id__in = clubs_joined)
+
+        # club = Club.objects.get(id = self.kwargs['pk'])
+        # instance.save()
+        # form.save_m2m()
+        club.user.add(self.request.user)
+        return super().form_valid(form)
+    def get_success_url(self):
+        return reverse('club', kwargs = {'pk': self.kwargs['pk']})

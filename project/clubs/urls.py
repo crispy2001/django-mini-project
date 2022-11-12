@@ -6,6 +6,8 @@ from . import views
 urlpatterns = [
     re_path(r'create', views.ClubCreateView.as_view(), name = 'club-create'),
     re_path(r'^(?P<pk>\w+)/update', views.ClubUpdateView.as_view(), name = 'club-update'),
+    re_path(r'^(?P<pk>\w+)/member', views.ClubDetailView.as_view(), name = 'club-member'),
+    re_path(r'^(?P<pk>\w+)/join', views.ClubJoinView.as_view(), name = 'club-join'),
     re_path(r'^(?P<pk>\w+)', views.ClubDetailView.as_view(), name = 'club'),
-    # re_path(r'', views.ClubIndexView.as_view(), name = 'club-index'),
+    re_path(r'', views.ClubIndexView.as_view(), name = 'club-index'),
 ]

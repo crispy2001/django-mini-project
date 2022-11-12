@@ -16,7 +16,7 @@ from .forms import ProfileForm
 
 class SignUp(generic.CreateView):
     form_class = UserCreationForm
-    success_url = reverse_lazy('allauth')
+    success_url = reverse_lazy('login')
     template_name = 'signup.html'
 
 class ProfileIndexView(TemplateView):
@@ -32,7 +32,7 @@ class ProfileIndexView(TemplateView):
             articles = Article.objects.filter(user_id = self.request.user.id)
             context['articles'] = articles
         else:
-            articles = Article.objects.get(user_id = profile.id, is_visable = 1)
+            articles = Article.objects.filter(user_id = profile.id, is_visable = 1)
             context['articles'] = articles
         context['profile'] = profile
         context['person'] = person

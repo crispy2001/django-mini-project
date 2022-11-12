@@ -6,3 +6,8 @@ class ClubForm(forms.ModelForm):
         model = Club
         fields = ['introduction', 'cover']
         # fields = ['introduction', 'avatar', 'is_visable']
+
+class JoinClubForm(forms.ModelForm):
+    class Meta:
+        model = Club
+        fields = []
