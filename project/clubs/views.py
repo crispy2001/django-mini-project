@@ -32,11 +32,27 @@ class ClubIndexView(TemplateView):
 
 class ClubDetailView(UserPassesTestMixin, TemplateView):
     def test_func(self):
-        club = Club.objects.get( id = self.kwargs['pk'])
+        # club = Club.objects.get( id = self.kwargs['pk'])
+        
         # print(club.user.all()[0].id)
         # test = Club.objects.filter(user__id = self.request.user.id)
-        if  Club.objects.filter(user__id = self.request.user.id):
+        
+        # if  Club.objects.filter(user__id = self.request.user.id):
+        #     return self.request.user
+
+        
+        # for i in clubs_joined:
+        #     print(i.id)
+        # print(self.kwargs['pk'])
+        
+        # if clubs_joined.get(id = self.kwargs['pk']):
+        try:
+            u = User.objects.get( id = self.request.user.id)
+            clubs_joined = u.club_set.all()
+            club = clubs_joined.get(id = self.kwargs['pk'])
             return self.request.user
+        except:
+            print("doesnt exist")
     
     model = Club
     template_name = 'club/club_info.html'

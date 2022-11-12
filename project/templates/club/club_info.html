@@ -46,8 +46,9 @@
                 <thead>
                   <tr>
                     <!-- <th scope="col">#</th> -->
-                    <th class="col-3">Title</th>
-                    <th class="col-8">Article</th>
+                    <th class="col-2">Title</th>
+                    <th class="col-6">Article</th>
+                    <th class="col-2">Author</th>
                     <th class="col">more</th>
                   </tr>
                 </thead>
@@ -57,6 +58,7 @@
                         <!-- <th scope="row">1</th> -->
                         <td>{{article.title}}</td>
                         <td>{{article.article}}</td>
+                        <td>{{article.user}}</td>
                         <td>
                             <a href="{% url 'club-article' club_pk=club.id pk=article.id %}" class = "text-center">more</a>
                         </td>

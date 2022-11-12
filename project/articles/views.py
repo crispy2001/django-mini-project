@@ -6,7 +6,8 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
 from django.http import Http404, request, response
-from .models import Article
+from .models import Article, User
+from clubs.models import Club
 from .forms import ArticleForm
 from django.shortcuts import redirect, reverse
 import datetime
@@ -61,6 +62,7 @@ class ArticleUpdateView(UserPassesTestMixin, UpdateView):
 
     def form_valid(self, form):
         form.instance.update_time = datetime.datetime.now()
+
         print(datetime.datetime.now())
 
         # check the view permission
@@ -69,6 +71,7 @@ class ArticleUpdateView(UserPassesTestMixin, UpdateView):
             form.instance.is_visable = 1
         else:
             form.instance.is_visable = 0
+        print(form.instance.is_visable)
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -130,9 +133,19 @@ class ClubArticleUpdateView(UserPassesTestMixin, UpdateView):
     
 class ClubArticleDetailView(UserPassesTestMixin, TemplateView):
     def test_func(self):
-        article = Article.objects.get( id = self.kwargs['pk'])
-        if article.user_id == self.request.user.id or article.is_visable == 1:
+        # article = Article.objects.get( id = self.kwargs['pk'])
+        # if article.user_id == self.request.user.id or article.is_visable == 1:
+        
+        # if Club.objects.filter(user__id = self.request.user.id):
+        #     return self.request.user
+        u = User.objects.get( id = self.request.user.id)
+        clubs_joined = u.club_set.all()
+        try:
+            club = clubs_joined.get(id = self.kwargs['club_pk'])
             return self.request.user
+        except:
+            print("doesnt exist")
+
     model = Article
     template_name = 'article/club_article.html'
     
