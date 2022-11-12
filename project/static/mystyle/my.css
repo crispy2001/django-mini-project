@@ -18,14 +18,14 @@
 
  
 .img-cover{
-    width: 300px;
-    height: 300px;
+    /* width: 300px; */
+    /* height: 225px; */
+    max-height: 225px;
     overflow: hidden;
-    background: #f80;
 }
 .img-cover img{
-    height: 500px;
-    margin-left: -195px;
+    height: 225px;
+    /* margin-left: -195px; */
 }
 
 .test-row{

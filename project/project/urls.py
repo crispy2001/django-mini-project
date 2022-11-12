@@ -35,6 +35,7 @@ urlpatterns = [
 
     path('articles/', include('articles.urls')),
     path('clubs/', include('clubs.urls')),
+    path('index/', views.Index.as_view(), name = 'index'),
 
     path('test/', views.Test.as_view(), name = 'test'),
 ]

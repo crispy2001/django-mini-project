@@ -15,9 +15,16 @@
                 {%for club in clubs_joined%}
                 <div class="col">
                     <div class="card shadow-sm">
-                    
+                    {%if club.cover%}
+                    {%load static%}
+                    <div class = "d-flex justify-content-center bg-dark" >
+                        <div class = " img-cover d-flex justify-content-center">
+                            <img class = "" src = "{{ MEDIA_URL}}{{club.cover}}">
+                        </div>
+                    </div>
+                    {%else%}
                     <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/></svg>
-                    
+                    {%endif%}
                     <div class="card-body">
                         <p class="card-text">{{club.name}}</p>
                         <div class="d-flex justify-content-between align-items-center">
@@ -37,8 +44,16 @@
                 {%for club in clubs_not_joined%}
                 <div class="col">
                     <div class="card shadow-sm">
+                    {%if club.cover%}
+                    {%load static%}
+                    <div class = "d-flex justify-content-center bg-dark" >
+                        <div class = " img-cover d-flex justify-content-center">
+                            <img class = "" src = "{{ MEDIA_URL}}{{club.cover}}">
+                        </div>
+                    </div>
+                    {%else%}
                     <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/></svg>
-                    
+                    {%endif%}
                     <div class="card-body">
                         <p class="card-text">{{club.name}}</p>
                         <div class="d-flex justify-content-between align-items-center">
